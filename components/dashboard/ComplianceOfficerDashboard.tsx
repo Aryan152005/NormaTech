@@ -4,13 +4,16 @@ import { useState } from 'react';
 import { Users, FileCheck, AlertCircle } from 'lucide-react';
 import type { Profile } from '@/lib/supabase/types';
 
-export default function ComplianceOfficerDashboard({ profile }: { profile: Profile }) {
+export default function ComplianceOfficerDashboard({
+  profile,
+}: {
+  profile: Profile | null;
+}) {
   const [assigningUser, setAssigningUser] = useState(false);
   const [newUserEmail, setNewUserEmail] = useState('');
 
   const handleAssignUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement user assignment functionality
     setAssigningUser(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setAssigningUser(false);
@@ -20,8 +23,10 @@ export default function ComplianceOfficerDashboard({ profile }: { profile: Profi
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-4">Welcome, {profile?.full_name || 'Compliance Officer'}</h2>
-        <p className="text-gray-600 mb-4">Role: {profile?.role}</p>
+        <h2 className="text-2xl font-bold mb-4">
+          Welcome, {profile?.full_name || 'Compliance Officer'}
+        </h2>
+        <p className="text-gray-600 mb-4">Role: {profile?.role || 'N/A'}</p>
 
         {/* Assign Users Section */}
         <div className="mt-6">
@@ -65,7 +70,9 @@ export default function ComplianceOfficerDashboard({ profile }: { profile: Profi
                 <AlertCircle className="h-5 w-5 text-yellow-500 mr-3" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Document {i + 1}.pdf</p>
-                  <p className="text-xs text-gray-500">Submitted by: user{i + 1}@example.com</p>
+                  <p className="text-xs text-gray-500">
+                    Submitted by: user{i + 1}@example.com
+                  </p>
                 </div>
                 <button className="px-3 py-1 text-sm text-primary hover:text-primary/80">
                   Review
@@ -84,7 +91,9 @@ export default function ComplianceOfficerDashboard({ profile }: { profile: Profi
                 <Users className="h-5 w-5 text-gray-400 mr-3" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">user{i + 1}@example.com</p>
-                  <p className="text-xs text-gray-500">Assigned on: {new Date().toLocaleDateString()}</p>
+                  <p className="text-xs text-gray-500">
+                    Assigned on: {new Date().toLocaleDateString()}
+                  </p>
                 </div>
                 <FileCheck className="h-5 w-5 text-green-500" />
               </div>

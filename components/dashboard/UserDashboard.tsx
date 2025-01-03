@@ -4,11 +4,10 @@ import { useState } from 'react';
 import { Upload, FileText, Clock } from 'lucide-react';
 import type { Profile } from '@/lib/supabase/types';
 
-export default function UserDashboard({ profile }: { profile: Profile }) {
+export default function UserDashboard({ profile }: { profile: Profile | null }) {
   const [uploading, setUploading] = useState(false);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // TODO: Implement file upload functionality
     setUploading(true);
     // Simulate upload delay
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -18,14 +17,18 @@ export default function UserDashboard({ profile }: { profile: Profile }) {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-4">Welcome, {profile?.full_name || 'User'}</h2>
-        <p className="text-gray-600 mb-4">Role: {profile?.role}</p>
+        <h2 className="text-2xl font-bold mb-4">
+          Welcome, {profile?.full_name || 'User'}
+        </h2>
+        <p className="text-gray-600 mb-4">Role: {profile?.role || 'N/A'}</p>
         
         {/* Upload Section */}
         <div className="mt-6">
-          <label 
+          <label
             htmlFor="file-upload"
-            className={`relative cursor-pointer ${uploading ? 'opacity-50' : ''} flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary transition-colors`}
+            className={`relative cursor-pointer ${
+              uploading ? 'opacity-50' : ''
+            } flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary transition-colors`}
           >
             <input
               id="file-upload"
@@ -40,8 +43,8 @@ export default function UserDashboard({ profile }: { profile: Profile }) {
               <div className="text-sm text-gray-600">
                 <span className="font-medium text-primary hover:text-primary/80">
                   Click to upload
-                </span>
-                {' '}or drag and drop
+                </span>{' '}
+                or drag and drop
               </div>
               <p className="text-xs text-gray-500">PDF files only (max 10MB)</p>
             </div>
